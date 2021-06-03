@@ -15,9 +15,4 @@ class MainActivity : AppCompatActivity() {
             startActivity(startSecScreen)
         }
     }
-
-//    fun startMe(view: View) {
-//        val startSecScreen = Intent(this, SecondActivity::class.java)
-//        startActivity(startSecScreen)
-//    }
 }

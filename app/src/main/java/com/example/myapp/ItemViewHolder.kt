@@ -1,5 +1,6 @@
 package com.example.myapp
 
+import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,6 +14,8 @@ class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 textView.text = text
 
                 Glide.with(context).load(imageUrl).into(imgView)
+
+                if (color == "gray") itemView.setBackgroundColor(Color.GRAY)
             }
         }
     }

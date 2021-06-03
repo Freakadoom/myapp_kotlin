@@ -6,13 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ItemAdapter: RecyclerView.Adapter<ItemViewHolder>() {
 
-      private val itemsList = mutableListOf<Item>()
-
-//    var items = listOf<Item>()
-//        set(value) {
-//            field = value
-//            notifyDataSetChanged()
-//        }
+    private val itemsList = mutableListOf<Item>()
 
     fun addItems(item: Item) {
         itemsList.add(item)

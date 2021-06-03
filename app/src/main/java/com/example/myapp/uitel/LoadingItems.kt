@@ -7,10 +7,8 @@ import com.example.myapp.R
 class LoadingItems(val sActivity: Activity) {
     private lateinit var isItems: AlertDialog
     fun startLoading() {
-//        set View
         val inflater = sActivity.layoutInflater
         val itemsView = inflater.inflate(R.layout.progress_item, null)
-//        set Items
         val builder = AlertDialog.Builder(sActivity)
         builder.setView(itemsView)
         builder.setCancelable(false)
