@@ -18,18 +18,14 @@ class SecondActivity : AppCompatActivity() {
 
     private lateinit var itemAdapter: ItemAdapter
 
-
+    private val loading = LoadingItems(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
         initRecyclerView()
 
-        val loading = LoadingItems(this)
         loading.startLoading()
-        if(itemAdapter.itemCount > 0) {
-            loading.isDismiss()
-        }
 
         parsedJSON(URL)
 
@@ -40,7 +36,6 @@ class SecondActivity : AppCompatActivity() {
 
             val apiResponse = URL(url).readText()
 
-
             val response = JSONObject(apiResponse).getJSONObject("response")
 
             val items = response.getJSONArray("items")
@@ -48,7 +43,6 @@ class SecondActivity : AppCompatActivity() {
             val length = items.length()
 
             for(i in 0..length){
-
 
                 val item = items.getJSONObject(i)
                 val itemString = item.toString()
@@ -65,8 +59,10 @@ class SecondActivity : AppCompatActivity() {
 
                                 val image = images(imageArray).toString()
 
-                                takeItems(image, textOut)
+                                val bgColor = "gray"
 
+                                takeItems(image, textOut, bgColor)
+                                dismiss()
                             }
                             "photo" -> {
                                 val text = copyHistory.getString("text")
@@ -76,7 +72,10 @@ class SecondActivity : AppCompatActivity() {
 
                                 val image = images(imageArray).toString()
 
-                                takeItems(image, textOut)
+                                val bgColor = "white"
+
+                                takeItems(image, textOut, bgColor)
+                                dismiss()
                             }
                             "link" -> {
                                 val textOut = attachments.getJSONObject("link").getString("title")
@@ -85,7 +84,10 @@ class SecondActivity : AppCompatActivity() {
 
                                 val image = images(imageArray).toString()
 
-                                takeItems(image, textOut)
+                                val bgColor = "white"
+
+                                takeItems(image, textOut, bgColor)
+                                dismiss()
                             }
                         }
                     }
@@ -100,7 +102,10 @@ class SecondActivity : AppCompatActivity() {
 
                                 val image = images(imageArray).toString()
 
-                                takeItems(image, textOut)
+                                val bgColor = "gray"
+
+                                takeItems(image, textOut, bgColor)
+                                dismiss()
                             }
                             "photo" -> {
                                 val text = item.getString("text")
@@ -110,7 +115,10 @@ class SecondActivity : AppCompatActivity() {
 
                                 val image = images(imageArray).toString()
 
-                                takeItems(image, textOut)
+                                val bgColor = "white"
+
+                                takeItems(image, textOut, bgColor)
+                                dismiss()
                             }
                             "link" -> {
                                 val textOut = attachments.getJSONObject("link").getString("title")
@@ -119,7 +127,10 @@ class SecondActivity : AppCompatActivity() {
 
                                 val image = images(imageArray).toString()
 
-                                takeItems(image, textOut)
+                                val bgColor = "white"
+
+                                takeItems(image, textOut, bgColor)
+                                dismiss()
                             }
                         }
                     }
@@ -128,13 +139,21 @@ class SecondActivity : AppCompatActivity() {
             }
         }
     }
-    private fun takeItems(img: String, text: String) {
+
+    private fun takeItems(img: String, text: String, bgColor: String) {
         val itemView = Item(
             text = text,
-            imageUrl = img
+            imageUrl = img,
+            color = bgColor
         )
 
         runOnUiThread { itemAdapter.addItems(itemView) }
+    }
+
+    private fun dismiss() {
+        if(itemAdapter.itemCount > 0) {
+            loading.isDismiss()
+        }
     }
 
     private fun images(imgArr: JSONArray): String? {
@@ -152,7 +171,6 @@ class SecondActivity : AppCompatActivity() {
         }
         return image
     }
-
 
     private fun initRecyclerView(){
         itemAdapter = ItemAdapter()
